@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Characters";
+}
+<div style="text-align:center">
+    <div style="background-color:#c1c1c1; margin:3em; padding:1em; border-radius:20px; display:inline-block;width:500px">
+        <button class="btn btn-default" onclick="newCharacter()" style="float:right; background-color:black; color:white">New</button>
+        <h2 style="color:black; float:left">Characters</h2>
+    </div>
+</div>
+    
+@section Scripts{
+    <script>
+        function newCharacter() {
+            window.location.href = '@Url.Action("NewCharacter","CharacterCreator")';
+        };
+    </script>
+    }
+
+

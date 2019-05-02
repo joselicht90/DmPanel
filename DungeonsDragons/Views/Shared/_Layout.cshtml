@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<style>
+    .gradientBg {
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(61,108,100,1) 48%, rgba(13,34,85,1) 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+    }
+</style>
+<html class="gradientBg" @*style="background-attachment: fixed;background-repeat: no-repeat;margin:0;background-position:center;background-size:cover;height:100%; padding:0"*@>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeons & Dragons - DM Panel</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/uikit")
+    <link href="~/Content/Customs.css" rel="stylesheet" />
+</head>
+
+<body style="background-color:transparent;padding:0">
+    <div class="uk-position-relative" style="vertical-align:top">
+        <nav class="uk-navbar-container" uk-navbar="dropbar: true">
+            <div class="uk-navbar-left">
+                <a href="~/Home/Index" class="uk-navbar-item uk-logo"><img src="~/Content/img/5e-bonus-action-4.png" style="height:50px"></a>
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="#">My Creations</a>
+                        <div class="uk-navbar-dropdown" style="width:100%; background-color:transparent">
+                            <div class="uk-flex-inline">
+                                <div class="outer-div uk-margin-left" style="height:200px">
+                                    <div class="inner-div" style="cursor:pointer;background-image:url(../../Content/img/813.jpg)" onclick="CharacterCreator()"></div>
+                                </div>
+                                <div class="outer-div uk-margin-left">
+                                    <div class="inner-div" style="background-image:url(../../Content/img/813.jpg)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="uk-navbar-dropbar" style="background-color:rgba(255, 255, 255, 0.4); "></div>
+
+    </div>
+    @*<nav class="uk-navbar-container fixed-top" style="background-color:#233b5f; text-decoration-color:white; padding:0">
+            <a class="navbar-brand" href="#"><img src="~/Content/img/5e-bonus-action-4.png" height="50" /></a>
+            <ul class="nav nav-pills">
+                <li class="nav-item" id="creation_nav_item" style="border-radius:20px">
+                    <a class="nav-link" href="#" data-toggle="collapse" onclick="Toggle('myCreations', 'creation_nav_item')" data- aria-expanded="false" style="color:white; font-family:Tahoma">
+                        My Creations
+                    </a>
+                </li>
+                <li class="nav-item" id="tools_nav_item" style="border-radius:20px">
+                    <a class="nav-link" id="navbarDropdown2" href="#" onclick="Toggle('tools','tools_nav_item')" aria-expanded="false" style="color:white; font-family:Tahoma">
+                        Tools
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="collapse" id="myCreations" style="position:absolute;z-index:1;background-color:rgba(35, 59, 95,.5); padding:1em">
+            <div class="row">
+                <div class="col">
+                    <div class="outer-div" style="height:200px">
+                        <div class="inner-div" style="cursor:pointer;background-image:url(../../Content/img/813.jpg)" onclick="CharacterCreator()" ></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="outer-div">
+                        <div class="inner-div" style="background-image:url(../../Content/img/813.jpg)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collapse" id="tools" style="position:absolute;z-index:1;background-color:rgba(35, 59, 95,.5); padding:1em">
+            <div class="row">
+                <div class="col">
+                    <div class="outer-div">
+                        <button class="inner-div" style="height:200px; width:420px; overflow:hidden;background-image:url(../../Content/img/813.jpg);background-size: 100% 100%;background-repeat: no-repeat;border: 2px solid black;" ></button>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="~/Content/img/813.jpg" height="150" />
+                </div>
+            </div>
+        </div>
+        <div class="collapse" id="resources" style="position:absolute;z-index:1;background-color:#233b5f; padding:1em">
+            <div class="row">
+                <div class="col">
+                    <img src="~/Content/img/813.jpg" height="150" />
+                </div>
+                <div class="col">
+                    <img src="~/Content/img/813.jpg" height="150" />
+                </div>
+            </div>
+        </div>*@
+    <div class="container body-content" style="position:relative">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", false)
+    @Html.Partial("_LoadingModal")
+</body>
+</html>
+
+<script>
+
+    function showLoadingModal() {
+        UIkit.modal("#loadingModal").show();
+    };
+    function hideLoadingModal() {
+        UIkit.modal("#loadingModal").hide();
+    };
+
+    function CharacterCreator() {
+        window.location.href = '@Url.Action("Index","CharacterCreator")';
+    }
+
+    function Toggle(id, navItemId) {
+
+        $(".collapse").each(function (i) {
+            if (id === this.id) {
+                if ($(this).is(":visible")) {
+                    $("#" + navItemId).css({ 'background-color': '#233b5f' });
+                }
+                else {
+                    $("#" + navItemId).css({ 'background-color': '#606060' });
+                }
+                $(this).slideToggle("slow");
+            }
+            else {
+                $(this).slideUp("fast");
+            }
+        });
+        $(".nav-item").each(function () {
+            if (navItemId !== this.id) {
+                $(this).css({ 'background-color': '#233b5f' });
+            }
+        });
+    }
+
+</script>

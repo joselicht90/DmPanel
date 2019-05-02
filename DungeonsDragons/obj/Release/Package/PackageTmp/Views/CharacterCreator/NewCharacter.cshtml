@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "NewCharacter";
+}
+
+<div class="uk-margin-medium-top uk-align-center" style="background-color:#f8f8f8; border-radius:20px; width:50%">
+    <ul class="uk-flex-center" uk-tab>
+        <li class="uk-active"><a href="#" style="font-size:large; font-weight:bolder">Race</a></li>
+        <li><a href="#" style="font-size:large; font-weight:bolder">Class</a></li>
+        <li><a href="#" style="font-size:large; font-weight:bolder">Background</a></li>
+    </ul>
+    <ul class="uk-switcher uk-margin">
+        <li>
+            <div style="height:auto; padding:2em">
+                <div class="uk-margin-small-bottom">
+                    @Html.DropDownList("Race", ViewBag.Races as SelectList, "Select a Race", new { @class = "uk-select", id = "raceSelect" })
+                </div>
+                <div id="traits" class="uk-section uk-section-small uk-section-muted" hidden>
+                    <div class="uk-container">
+                        <h3>Traits</h3>
+                        <div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+                            <div>
+                                <p id="traitsString"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+        <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+        <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, sed do eiusmod.</li>
+    </ul>
+</div>
+
+@section Scripts{
+    <script>
+        //function showLoadingModal() {
+        //    UIkit.modal("#loadingModal").show();
+        //};
+        //function hideLoadingModal() {
+        //    UIkit.modal("#loadingModal").hide();
+        //};
+        $("#raceSelect").on("change", function () {
+            if ($("#raceSelect").val() !== "") {
+                $.ajax({
+                    url: '@Url.Action("GetRaceTraits","CharacterCreator")',
+                    data: {
+                        url: $("#raceSelect").val()
+                    },
+                    beforeSend: function () {
+                        showLoadingModal();
+                    },
+                    success: function (data) {
+                        $("#traitsString").html(data);
+                        $("#traits").removeAttr('hidden');
+                        hideLoadingModal();
+                    }
+                });
+            }
+            else {
+                $("#traits").attr('hidden', true);
+                $("#traitsString").html("");
+            }
+
+        });
+    </script>
+
+}
